@@ -17,7 +17,9 @@ using ColorSchemes
 
 function plot_mach_histograms(snap_range, z_range, plot_name)
 
-    colors = [1, 8, 12]
+#    colors = [1, 8, 15]
+    colors = ["purple", "mediumblue", "teal"]
+
 
     fig = get_figure(1.0)
     plot_styling!()
@@ -39,9 +41,11 @@ function plot_mach_histograms(snap_range, z_range, plot_name)
         data_file = data_path * "lower_relic_mach_histograms_$(@sprintf("%03i", snap_range[i])).txt"
         data = readdlm(data_file)
 
-        c = ColorSchemes.batlow25[colors[i]]
+        # c = ColorSchemes.batlow25[colors[i]]
+        # c = (c.r, c.g, c.b)
+        c = colors[i]
 
-        step(data[:, 1], data[:, 2], where="post", color=(c.r, c.g, c.b), label="z = $(@sprintf("%0.2f", z_range[i]))", lw=3)
+        step(data[:, 1], data[:, 2], where="post", color=c, label="z = $(@sprintf("%0.2f", z_range[i]))", lw=3)
     end
     axvline(2.0, color="k", linestyle=":", alpha=0.3, label=L"\mathcal{M}_{s,\mathrm{crit.}}")
 
