@@ -41,7 +41,9 @@ function plot_synch_spectra_evolution(plot_name)
     z = [0.31515877622358834, 0.29413466507090624, 0.2734466450866466]
 
     # colors in colorscale array
-    colors = [1, 8, 12]
+    #colors = [1, 8, 15]
+    colors = ["purple", "mediumblue", "teal"]
+
 
     # helper function to get my plot styling
     fig = get_figure(1.0)
@@ -89,8 +91,10 @@ function plot_synch_spectra_evolution(plot_name)
         # spectrum in particles 
         filename = data_path * "lower_relic_spec_$(@sprintf("%03i", snaps[i])).dat"
         ν_part, P_part = read_spectrum_sim(filename)
-        c = ColorSchemes.batlow25[colors[i]]
-        plot(ν_part .* 1.e-6, P_part, label="z = $(@sprintf("%0.2f", z[i]))", lw=3, color=(c.r, c.g, c.b))
+        # c = ColorSchemes.batlow25[colors[i]]
+        # c = (c.r, c.g, c.b)
+        c = colors[i]
+        plot(ν_part .* 1.e-6, P_part, label="z = $(@sprintf("%0.2f", z[i]))", lw=3, color=c)
     end
 
     legend(frameon=false)
