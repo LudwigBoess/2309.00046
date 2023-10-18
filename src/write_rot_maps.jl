@@ -94,11 +94,9 @@ end
 """
     make_rot_maps(snap)
 
-Writes all maps that are required for making Fig. A1.
+Writes all maps that are required for making Fig. B1.
 """
-function make_rot_maps(rot_num)
-
-    snap = 57
+function make_rot_maps(snap, rot_num)
 
     println("running on $(nthreads()) threads")
     flush(stdout)
@@ -126,6 +124,14 @@ function make_rot_maps(rot_num)
 
     image_path = map_path * "g55_$(@sprintf("%03i", snap)).rot$rot_num."
 
+    # # snap 56
+    # if snap == 56
+    #     center = [3.5, -3.2, 1.5] .* 1.e3 ./ GU.x_physical
+    # # snap 57
+    # elseif snap == 57
+    #     center = [3.5, -3.2, 1.5] .* 1.e3 ./ GU.x_physical
+    # end 
+
     center = [3.5, -3.2, 1.5] .* 1.e3 ./ GU.x_physical
     width = 1000.0 ./ GU.x_physical
 
@@ -133,7 +139,7 @@ function make_rot_maps(rot_num)
     kernel = WendlandC4(Float64, 2)
 
     pos = data["POS"] .- center
-    rot = [90 + 15.0 * rot_num, 180.0, 90.0 ]
+    rot = [90 + 15.0 * rot_num, 180.0, 90.0]
     pos = rotate_3D(pos, rot...)
 
 
@@ -148,25 +154,11 @@ function make_rot_maps(rot_num)
 
     # define mapping parameters
     param = mappingParameters(
-            center=zeros(3),
-            x_size=xy_size * GU.x_physical,
-            y_size=xy_size * GU.x_physical,
-            z_size=z_size  * GU.x_physical,
-            Npixels=1024 )
-
-
-    println("rho")
-    flush(stdout)
-    flush(stderr)
-    rho_cgs = data["RHO"] .* GU.rho_cgs
-    weights = part_weight_physical(length(rho_cgs), param)
-
-    image_prefix = image_path * "rho"
-    weights = part_weight_physical(length(rho_cgs), param)
-    map_it(pos, hsml, mass, rho, rho_cgs, weights, 
-            units="g/cm^2", reduce_image=false; 
-            kernel, snap, param, image_prefix)
-
+        center=zeros(3),
+        x_size=xy_size * GU.x_physical,
+        y_size=xy_size * GU.x_physical,
+        z_size=z_size * GU.x_physical,
+        Npixels=1024)
 
     println("Xray")
     flush(stdout)
@@ -179,9 +171,9 @@ function make_rot_maps(rot_num)
 
     weights = part_weight_physical(length(rho_cgs), param)
 
-    map_it(pos, hsml, mass, rho, Xray, weights, 
-            units="erg/s/cm^2", reduce_image=false; 
-            kernel, snap, param, image_prefix)
+    map_it(pos, hsml, mass, rho, Xray, weights,
+        units="erg/s/cm^2", reduce_image=false;
+        kernel, snap, param, image_prefix)
 
 
     println("CReE")
@@ -239,7 +231,7 @@ function make_rot_maps(rot_num)
 end
 
 
-for rot = 0:3
-    make_rot_maps(rot)
+for snap ∈ 56:57, rot ∈ [0,2]
+    make_rot_maps(snap, rot)
 end
 

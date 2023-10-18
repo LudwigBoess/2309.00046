@@ -9,7 +9,7 @@ using PyCall
 cm = pyimport("cmasher")
 @info "done"
 
-function plot_relic_evolution()
+function plot_relic_rotation()
 
     @info "plotting..."
 
@@ -19,11 +19,11 @@ function plot_relic_evolution()
     Nrows = 4
 
     files = [map_path * "g55_$(@sprintf("%03i", snap)).rot$rot_num.$filename.xy.fits"
-             for rot_num ∈ collect(0:3), filename ∈ filenames]
+             for rot_num ∈ [0, 2], snap ∈ [56, 57], filename ∈ filenames]
 
 
     # limits for colorbars
-    vmin_arr = [1.e-5, 1.e6, 1.e-20, -1.5]
+    vmin_arr = [1.e-6, 1.e6, 1.e-20, -1.5]
     vmax_arr = [5.e-1, 2.e9, 5.e-17, -0.5]
 
     # colormaps per column
@@ -37,8 +37,10 @@ function plot_relic_evolution()
 
 
     # redshift annotation
-    annotate_time = falses(Nrows * Ncols)
+    annotate_time = trues(Nrows * Ncols)
     time_labels = ["" for _ = 1:Nrows*Ncols]
+    time_labels[1:2] .= "z = 0.32"
+    time_labels[3:4] .= "z = 0.29"
 
 
     # logarithmic colorbar
@@ -50,17 +52,14 @@ function plot_relic_evolution()
 
     # scale line
     annotate_scale = falses(Nrows * Ncols)
-    annotate_scale[1] = true
-    annotate_scale[2] = true
-    annotate_scale[3] = true
-    annotate_scale[4] = true
+    annotate_scale[1:Nrows] .= true
 
     # scale label
     scale_kpc = 500.0
     scale_label = "500 kpc"
 
     # name of the plot
-    plot_name = plot_path * "FigA1.pdf"
+    plot_name = plot_path * "FigB1.pdf"
 
     plot_image_grid(Nrows, Ncols, files, im_cmap, cb_labels,
         vmin_arr, vmax_arr, plot_name,
@@ -80,4 +79,4 @@ function plot_relic_evolution()
 end
 
 
-plot_relic_evolution()
+plot_relic_rotation()
