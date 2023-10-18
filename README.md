@@ -1,9 +1,11 @@
-[![DOI](https://zenodo.org/badge/686907702.svg)](https://zenodo.org/badge/latestdoi/686907702)
+| **This Repository**                                                 | **Simulation Data**                                                                                | 
+|:-----------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------:| 
+[![DOI](https://zenodo.org/badge/686907702.svg)](https://zenodo.org/badge/latestdoi/686907702) | [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8398192.svg)](https://doi.org/10.5281/zenodo.8398192) |
 
 
 # A formation mechanism for "Wrong Way" Radio Relics
 
-In this repository you will find all scripts and dependencies to reproduce the figures presented in [Böss et. al. (submitted)](https://arxiv.org/abs/2207.05087).
+In this repository you will find all scripts and dependencies to reproduce the figures presented in [Böss et. al. (2023b)](https://ui.adsabs.harvard.edu/abs/2023arXiv230900046B/abstract).
 
 These scripts require Julia >= 1.7 to be installed. I reccomend using v1.9.
 
