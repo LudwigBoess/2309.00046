@@ -8,8 +8,9 @@ using ColorSchemes
 using SPHtoGrid
 @info "done"
 
+include(joinpath(@__DIR__, "config.jl"))
 
-snap_file = "/gpfs/work/pn68va/di67meg/PaperRepos/WrongWayRelics/data/snap_057"
+snap_base = data_path * "snap_$(@sprintf("%03i", 57))"
 
 syn = read_block(snap_file, "SYNE", parttype=0)
 sel = findall(syn .> -46.0)
@@ -64,12 +65,5 @@ rot2 = [120.0, 180.0, 90.0]
 
 rot3 = [150.0, 180.0, 90.0]
 
-plot_name = "/gpfs/work/pn68va/di67meg/PaperRepos/WrongWayRelics/Plots/rotation2.png"
+plot_name = plot_path * "rotation.png"
 plot_relic(pos_default, syn, rot1, rot2, rot3, plot_name)
-
-# pretty good
-rot1 = [120.0, 180.0, 90.0]
-rot1 = [0.0, 45.0, 180.0]
-rot1 = [30.0, 45.0, 180.0]
-rot1 = [45.0, 45.0, 180.0]
-
